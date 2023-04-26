@@ -3,6 +3,7 @@ package cntt2.k61.backend.domain;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table(name = "bill")
@@ -27,7 +28,7 @@ public class Bill {
     private BillStatus status;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createdAt;
+    private Instant createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -40,7 +41,7 @@ public class Bill {
         this.customerId = customerId;
         this.amount = amount;
         this.dueDate = dueDate;
-        this.status = BillStatus.PENDING;
+        this.status = BillStatus.pending;
     }
 
     public Long getId() {
@@ -83,11 +84,11 @@ public class Bill {
         this.status = status;
     }
 
-    public Timestamp getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
