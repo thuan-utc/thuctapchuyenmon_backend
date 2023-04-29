@@ -33,7 +33,7 @@ public class CustomerContract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Packages packages;
+    private InternetPackages internetPackages;
 
     public CustomerContract() {
     }
@@ -103,12 +103,12 @@ public class CustomerContract {
         this.customer = customer;
     }
 
-    public Packages getPackages() {
-        return this.packages;
+    public InternetPackages getPackages() {
+        return this.internetPackages;
     }
 
-    public void setPackages(Packages packages) {
-        this.packages = packages;
+    public void setPackages(InternetPackages internetPackages) {
+        this.internetPackages = internetPackages;
     }
 }
 

@@ -38,7 +38,6 @@ public class EmailService {
         Mail mail = new Mail(from, subject, toEmail, content);
 
         Request request = new Request();
-//        log.info("Send ema");
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
@@ -46,6 +45,7 @@ public class EmailService {
             Response response = sendGrid.api(request);
             log.info("Status code: {}", response.getStatusCode());
             log.info("Body: {}", response.getBody());
+            log.info("Sent remind bill email to email: {}", to);
         } catch (IOException e) {
             log.error("Can not send email to {}", to, e);
         }

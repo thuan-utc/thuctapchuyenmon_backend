@@ -2,16 +2,12 @@ package cntt2.k61.backend.controller;
 
 import cntt2.k61.backend.dto.BillDto;
 import cntt2.k61.backend.service.BillService;
+import cntt2.k61.backend.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bill")
@@ -20,7 +16,7 @@ public class BillController {
     private final BillService billService;
 
     @Autowired
-    public BillController(BillService billService) {
+    public BillController(BillService billService, EmailService emailService) {
         this.billService = billService;
     }
 
@@ -36,5 +32,14 @@ public class BillController {
                                      @RequestParam(defaultValue = "10") int pageSize){
         log.info("getting bills from page {}", pageNumber);
         return billService.getPendingBill(pageNumber, pageSize);
+    }
+
+    @GetMapping("/{customerId}/{billId}/send-remind-email")
+    public String sendRemindEmailTo(@PathVariable Long customerId, @PathVariable Long billId) {
+        if (billService.sendRemindEmailTo(customerId, billId)) {
+            return "SUCCESS";
+        } else {
+            return "FAILED";
+        }
     }
 }
