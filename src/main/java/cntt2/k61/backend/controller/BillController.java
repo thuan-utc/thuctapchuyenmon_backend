@@ -34,9 +34,34 @@ public class BillController {
         return billService.getPendingBill(pageNumber, pageSize);
     }
 
-    @GetMapping("/{customerId}/{billId}/send-remind-email")
-    public String sendRemindEmailTo(@PathVariable Long customerId, @PathVariable Long billId) {
-        if (billService.sendRemindEmailTo(customerId, billId)) {
+    @GetMapping("{userName}/get-paid-bill")
+    public Page<BillDto> getPaidBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
+                                                @RequestParam(defaultValue = "10") int pageSize,
+                                                @PathVariable String userName){
+        log.info("getting bills from page {}", pageNumber);
+        return billService.getPaidBillByCustomer(pageNumber, pageSize, userName);
+    }
+
+    @GetMapping("{userName}/get-pending-bill")
+    public Page<BillDto> getPendingBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
+                                                  @RequestParam(defaultValue = "10") int pageSize,
+                                                  @PathVariable String userName){
+        log.info("getting bills from page {}", pageNumber);
+        return billService.getPendingBillByCustomer(pageNumber, pageSize, userName);
+    }
+
+    @GetMapping("/{userName}/{billId}/send-remind-email")
+    public String sendRemindEmailTo(@PathVariable String userName, @PathVariable Long billId) {
+        if (billService.sendRemindEmailTo(userName, billId)) {
+            return "SUCCESS";
+        } else {
+            return "FAILED";
+        }
+    }
+
+    @GetMapping("{billId}/pay")
+    public String payBill(@PathVariable Long billId) {
+        if (billService.payBill(billId)) {
             return "SUCCESS";
         } else {
             return "FAILED";

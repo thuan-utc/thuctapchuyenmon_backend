@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "packages")
-public class InternetPackages {
+public class InternetPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,10 +29,10 @@ public class InternetPackages {
     @Column(name = "isdeleted", nullable = false)
     private boolean isDeleted;
 
-    public InternetPackages() {
+    public InternetPackage() {
     }
 
-    public InternetPackages(Long id, String packageName, String speed, String dataLimit, Long price, Timestamp createdDate, boolean isDeleted) {
+    public InternetPackage(Long id, String packageName, String speed, String dataLimit, Long price, Timestamp createdDate, boolean isDeleted) {
         this.id = id;
         this.packageName = packageName;
         this.speed = speed;

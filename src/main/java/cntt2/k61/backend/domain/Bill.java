@@ -34,6 +34,10 @@ public class Bill {
     @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id")
+    private CustomerContract contract;
+
     public Bill() {
     }
 
@@ -94,6 +98,18 @@ public class Bill {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public CustomerContract getContract() {
+        return contract;
+    }
+
+    public void setContract(CustomerContract contract) {
+        this.contract = contract;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
 

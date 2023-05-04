@@ -6,45 +6,70 @@ import java.time.Instant;
 @Entity
 @Table(name = "payments")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bill_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "bill_id")
     private Bill bill;
 
-    @Column(name = "amount", nullable = false)
-    private Long amount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id")
+    private CustomerContract customerContract;
 
-    @Column(name = "transaction_id", nullable = false)
+    @Column(name = "total_money")
+    private Long totalMoney;
+
+    @Column(name = "transaction_id")
     private String transactionId;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date")
     private Instant createdDate;
 
-    public Payment(Customer customer, Bill bill, Long amount, String transactionId, Instant createdDate) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
         this.bill = bill;
-        this.amount = amount;
-        this.transactionId = transactionId;
-        this.createdDate = createdDate;
     }
 
-    public Payment() {
+    public CustomerContract getCustomerContract() {
+        return customerContract;
     }
 
-    public Instant getCreatedDate() {
-        return createdDate;
+    public void setCustomerContract(CustomerContract customerContract) {
+        this.customerContract = customerContract;
     }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
+    public Long getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(Long totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     public String getTransactionId() {
@@ -55,12 +80,11 @@ public class Payment {
         this.transactionId = transactionId;
     }
 
-    public Long getAmount() {
-        return amount;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 }
-

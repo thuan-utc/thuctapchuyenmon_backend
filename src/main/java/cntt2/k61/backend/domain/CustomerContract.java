@@ -1,7 +1,7 @@
 package cntt2.k61.backend.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -25,7 +25,7 @@ public class CustomerContract {
     private Date endDate;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createdAt;
+    private Instant createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -33,12 +33,12 @@ public class CustomerContract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private InternetPackages internetPackages;
+    private InternetPackage internetPackage;
 
     public CustomerContract() {
     }
 
-    public CustomerContract(Long id, Long customerId, Long packageId, Date startDate, Date endDate, Timestamp createdAt) {
+    public CustomerContract(Long id, Long customerId, Long packageId, Date startDate, Date endDate, Instant createdAt) {
         this.id = id;
         this.customerId = customerId;
         this.packageId = packageId;
@@ -87,11 +87,11 @@ public class CustomerContract {
         this.endDate = endDate;
     }
 
-    public Timestamp getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -103,12 +103,12 @@ public class CustomerContract {
         this.customer = customer;
     }
 
-    public InternetPackages getPackages() {
-        return this.internetPackages;
+    public InternetPackage getPackages() {
+        return this.internetPackage;
     }
 
-    public void setPackages(InternetPackages internetPackages) {
-        this.internetPackages = internetPackages;
+    public void setPackages(InternetPackage internetPackage) {
+        this.internetPackage = internetPackage;
     }
 }
 
