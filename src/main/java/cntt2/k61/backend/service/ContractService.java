@@ -68,7 +68,7 @@ public class ContractService {
         return new PageImpl<>(response, pageable, customerContracts.getTotalElements());
     }
 
-    public String submitPackage(String userName, Long packageId) {
+    public String   submitPackage(String userName, Long packageId) {
         User user = userRepository.findByUserName(userName).orElseThrow(() -> new BusinessException("Can not get user by userName {}", userName));
         Customer customer = user.getCustomer();
         Optional<List<CustomerContract>> contractRegistered = contractRepository.findAllByCustomerId(customer.getId());

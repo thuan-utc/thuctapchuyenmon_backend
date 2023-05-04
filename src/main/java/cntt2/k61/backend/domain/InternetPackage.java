@@ -2,6 +2,7 @@ package cntt2.k61.backend.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table(name = "packages")
@@ -24,7 +25,7 @@ public class InternetPackage {
     private Long price;
 
     @Column(name = "created_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createdDate;
+    private Instant createdDate;
 
     @Column(name = "isdeleted", nullable = false)
     private boolean isDeleted;
@@ -32,7 +33,7 @@ public class InternetPackage {
     public InternetPackage() {
     }
 
-    public InternetPackage(Long id, String packageName, String speed, String dataLimit, Long price, Timestamp createdDate, boolean isDeleted) {
+    public InternetPackage(Long id, String packageName, String speed, String dataLimit, Long price, Instant createdDate, boolean isDeleted) {
         this.id = id;
         this.packageName = packageName;
         this.speed = speed;
@@ -82,11 +83,11 @@ public class InternetPackage {
         this.price = price;
     }
 
-    public Timestamp getCreatedDate() {
+    public Instant getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
 

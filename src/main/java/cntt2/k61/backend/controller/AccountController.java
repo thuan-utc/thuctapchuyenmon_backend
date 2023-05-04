@@ -2,6 +2,7 @@ package cntt2.k61.backend.controller;
 
 import cntt2.k61.backend.domain.User;
 import cntt2.k61.backend.domain.UserRole;
+import cntt2.k61.backend.dto.SignupDto;
 import cntt2.k61.backend.dto.UserDto;
 import cntt2.k61.backend.service.UserService;
 import org.slf4j.Logger;
@@ -36,5 +37,11 @@ public class AccountController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
+    }
+
+    @PostMapping("/signup")
+    public String signup(@RequestBody SignupDto signupDto) {
+        log.info("process signup for newUser {}", signupDto);
+        return userService.processSignup(signupDto);
     }
 }
