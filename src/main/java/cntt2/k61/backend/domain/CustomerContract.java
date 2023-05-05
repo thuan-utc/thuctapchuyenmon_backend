@@ -35,6 +35,25 @@ public class CustomerContract {
     @JoinColumn(name = "package_id", referencedColumnName = "id", insertable = false, updatable = false)
     private InternetPackage internetPackage;
 
+    @Column(name = "isdeleted", nullable = false)
+    private boolean isDeleted;
+
+    public InternetPackage getInternetPackage() {
+        return internetPackage;
+    }
+
+    public void setInternetPackage(InternetPackage internetPackage) {
+        this.internetPackage = internetPackage;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     public CustomerContract() {
     }
 

@@ -1,9 +1,8 @@
 package cntt2.k61.backend.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name = "bill")

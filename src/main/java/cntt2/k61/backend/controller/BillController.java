@@ -34,25 +34,9 @@ public class BillController {
         return billService.getPendingBill(pageNumber, pageSize);
     }
 
-    @GetMapping("{userName}/get-paid-bill")
-    public Page<BillDto> getPaidBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
-                                                @RequestParam(defaultValue = "10") int pageSize,
-                                                @PathVariable String userName){
-        log.info("getting bills from page {}", pageNumber);
-        return billService.getPaidBillByCustomer(pageNumber, pageSize, userName);
-    }
-
-    @GetMapping("{userName}/get-pending-bill")
-    public Page<BillDto> getPendingBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
-                                                  @RequestParam(defaultValue = "10") int pageSize,
-                                                  @PathVariable String userName){
-        log.info("getting bills from page {}", pageNumber);
-        return billService.getPendingBillByCustomer(pageNumber, pageSize, userName);
-    }
-
-    @GetMapping("/{userName}/{billId}/send-remind-email")
-    public String sendRemindEmailTo(@PathVariable String userName, @PathVariable Long billId) {
-        if (billService.sendRemindEmailTo(userName, billId)) {
+    @GetMapping("/{customerId}/{billId}/send-remind-email")
+    public String sendRemindEmailTo(@PathVariable Long customerId, @PathVariable Long billId) {
+        if (billService.sendRemindEmailTo(customerId, billId)) {
             return "SUCCESS";
         } else {
             return "FAILED";
@@ -66,5 +50,21 @@ public class BillController {
         } else {
             return "FAILED";
         }
+    }
+
+    @GetMapping("{userName}/get-paid-bill")
+    public Page<BillDto> getPaidBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
+                                               @RequestParam(defaultValue = "10") int pageSize,
+                                               @PathVariable String userName){
+        log.info("getting bills from page {}", pageNumber);
+        return billService.getPaidBillByCustomer(pageNumber, pageSize, userName);
+    }
+
+    @GetMapping("{userName}/get-pending-bill")
+    public Page<BillDto> getPendingBillByCustomer(@RequestParam(defaultValue = "0") int pageNumber,
+                                                  @RequestParam(defaultValue = "10") int pageSize,
+                                                  @PathVariable String userName){
+        log.info("getting bills from page {}", pageNumber);
+        return billService.getPendingBillByCustomer(pageNumber, pageSize, userName);
     }
 }

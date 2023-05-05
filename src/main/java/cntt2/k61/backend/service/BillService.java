@@ -73,20 +73,22 @@ public class BillService {
         return new PageImpl<>(response, pageable, bills.getTotalElements());
     }
 
-    public boolean sendRemindEmailTo(String userName, Long billId) {
-        User user = userRepository.findByUserName(userName).orElseThrow(() -> new BusinessException("Can not get user by userName {}", userName));
-        Customer customer = user.getCustomer();
+    public boolean sendRemindEmailTo(Long customerId, Long billId) {
+        Optional<Customer> customerOpt = customerRepository.findById(customerId);
         Optional<Bill> billOpt = billRepository.findById(billId);
-        if (customer == null) {
-            log.error("Can not find customer with userName {}", userName);
+        if (customerOpt.isEmpty()) {
+            log.error("Can not find customer with id {}", customerId);
         } else if (billOpt.isEmpty()){
             log.error("Can not find bill with id {}", billId);
         } else {
+            Customer customer = customerOpt.get();
             Bill bill = billOpt.get();
+            User user = userRepository.findByCustomerId(customer.getId());
             try {
                 String content = String.format("Hi %s, you have a bill %d month, due date %s", customer.getName(), bill.getAmount(),
                         bill.getDueDate());
                 emailService.sendEmail(user.getEmail(), "Internet Bill" ,content);
+                log.info("Sent remind bill email to email: {}", user.getEmail());
                 return true;
             } catch (Exception e) {
                 log.error("Can not send email to {}", user.getEmail());
@@ -97,7 +99,7 @@ public class BillService {
 
     public Page<BillDto> getPaidBillByCustomer(int pageNumber, int pageSize, String userName) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        User user = userRepository.findByUserName(userName).orElseThrow(() -> new BusinessException("Can not get user by userName {}", userName));
+        User user = userRepository.findByUserName(userName).orElseThrow(() -> new BusinessException("Can not get user by userName " + userName));
         Customer customer = user.getCustomer();
         Page<Bill> bills = billRepository.findAllByStatusAndCustomerId(BillStatus.paid,customer.getId(), pageable);
         List<BillDto> response =  bills.stream().map(b -> {
